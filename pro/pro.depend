@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1696783292 source:c:\users\usuario\documents\universidad\algoritmos\proyecto 1\pro\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+
