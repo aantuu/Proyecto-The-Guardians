@@ -30,6 +30,28 @@ struct player
     int nummano;
     struct Carta mazo[45];
 };
+void seccartas(struct player *jugador, int cartasdisp) {
+    int cartaselegidas = 0;
+
+    printf("Seleccione sus cartas (1-%d):\n", cartasdisp);
+    while (cartaselegidas < 3) {
+        int numeroCarta;
+        printf("Carta %d: ", cartaselegidas + 1);
+        scanf("%d", &numeroCarta);
+
+        if (numeroCarta >= 1 && numeroCarta <= cartasdisp) {
+            jugador->mano[cartaselegidas] = jugador->mazo[numeroCarta - 1];
+            cartaselegidas++;
+            printf("Carta %d seleccionada.\n", cartaselegidas);
+        } else {
+            printf("Número de carta inválido. Seleccione una carta del 1 al %d.\n", cartasdisp);
+        }
+    }
+
+    return cartaselegidas;
+}
+
+
 
 void asignarcartas(struct player *jugadores, int numjugadores, struct Carta baraja[], int numcartas) {
     int cartaxjugador = 15;
@@ -43,6 +65,8 @@ void asignarcartas(struct player *jugadores, int numjugadores, struct Carta bara
             jugadores[i].mano[j] = baraja[i * cartaxjugador + j];
             jugadores[i].nummano++;
         }
+    seccartas(&jugadores[i], cartaxjugador);
+
     }
 }
 
@@ -51,9 +75,9 @@ int main()
     int numcartas = 60;
     struct Carta baraja[numcartas];
 
-    printf("guard.txt\n");
+    //printf("guard.txt\n");
     FILE *guardians = fopen("guard.txt", "r");
-    char line[MAX_LINE_LENGTH]; //MAX_LINE_LENGTH es un valor global que definen ustedes
+    char line[MAX_LINE_LENGTH];
     while(fgets(line, MAX_LINE_LENGTH, guardians)){
 
         Carta *card = (Carta*)malloc(sizeof(Carta));
@@ -61,15 +85,12 @@ int main()
         char *text = strtok(line, ",");
         strcpy(card->nombres, text);
 
-        card->tipo = atoi(strtok(NULL, ",")); //atoi para valores enteros
-        card->PV = atoi(strtok(NULL, ",")); //atof para valores decimales
+        card->tipo = atoi(strtok(NULL, ","));
+        card->PV = atoi(strtok(NULL, ","));
         card->PA = atoi(strtok(NULL, ","));
         card->PD = atoi(strtok(NULL, ","));
 
         card->next = NULL;
-
-        // Se añade el Struct creado a la lista existente.
-        //addStruct(lista, card);
         printf("\n \n%s, %d, %d, %d, %d", card->nombres, card->PA, card->PD, card->PV, card->tipo);
     }
 
@@ -77,8 +98,43 @@ int main()
     struct player jugadores[numjugadores];
     asignarcartas(jugadores, numjugadores, baraja, numcartas);
 
+    int opcion;
+
+    /*while (1) {
+        printf("Menú:\n");
+        printf("1. Crear nueva carta\n");
+        printf("2. Comenzar juego\n");
+        printf("3. Ver historial de la partida\n");
+        printf("4. Salir\n");
+        printf("Seleccione una opción: ");
+
+        if (scanf("%d", &opcion) != 1) {
+            printf("Opcion invalida. Intente de nuevo.\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                //crearNuevaCarta();
+                break;
+            case 2:
+                //comenzarJuego();
+                mezclarbaraja(baraja, numcartas);
+                break;
+            case 3:
+                //verHistorial();
+                break;
+            case 4:
+                printf("Saliendo del juego. ¡Hasta luego!\n");
+                exit(0);
+            default:
+                printf("Opcion invalida. Intente de nuevo.\n");
+                break;
+        }
+    }*/
+
     fclose(guardians);
-    mezclarbaraja(baraja, numcartas);
 
     return 0;
 }
