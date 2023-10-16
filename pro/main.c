@@ -76,7 +76,7 @@ int main()
     struct Carta baraja[numcartas];
 
     //printf("guard.txt\n");
-    FILE *guardians = fopen("guard.txt", "r");
+    /*FILE *guardians = fopen("guard.txt", "r");
     char line[MAX_LINE_LENGTH];
     while(fgets(line, MAX_LINE_LENGTH, guardians)){
 
@@ -92,7 +92,7 @@ int main()
 
         card->next = NULL;
         printf("\n \n%s, %d, %d, %d, %d", card->nombres, card->PA, card->PD, card->PV, card->tipo);
-    }
+    }*/
 
     int numjugadores = 2;
     struct player jugadores[numjugadores];
@@ -134,7 +134,7 @@ int main()
         }
     }*/
 
-    fclose(guardians);
+    //fclose(guardians);
 
     return 0;
 }
