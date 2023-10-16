@@ -1,2 +1,0 @@
-# Proyecto-The-Guardians
-xd
